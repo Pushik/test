@@ -46,6 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Chart.cs" />
+    <Compile Include="Models\Data.cs" />
+    <Compile Include="Models\Indicator.cs" />
+    <Compile Include="Models\Info.cs" />
+    <Compile Include="Models\Quote.cs" />
+    <Compile Include="Models\QuoteValue.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

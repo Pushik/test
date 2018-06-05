@@ -11,5 +11,6 @@ namespace test.Models
     {
         [JsonProperty("result")]
         public Data Data { get; set; }
+
     }
 }
