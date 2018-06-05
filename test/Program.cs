@@ -16,27 +16,55 @@ namespace test
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Enter Quote code");
+            var code = Console.ReadLine();
+
             // Получение данных от сервера Yahoo
             Console.WriteLine("Данные от сервера");
-            WebRequest wrGETURL = WebRequest.Create("https://query1.finance.yahoo.com/v8/finance/chart/MU?interval=1d");
+            WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{code.ToUpperInvariant()}?interval=1d");
             Stream objStream;
             objStream = wrGETURL.GetResponse().GetResponseStream();
             StreamReader objReader = new StreamReader(objStream);
-            Console.WriteLine(objReader.ReadToEnd());
+            var json = objReader.ReadToEnd();
+
+            // Вот тут выводится всё одной строкой
+            Console.WriteLine("Raw sever reponse:");
+            Console.WriteLine(json);
+
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
-            
 
-            // вот тут нужно запихнуть ответ от сервера и уже что-то будет 
-            var quote = JsonConvert.DeserializeObject<Chart>(objReader.ReadToEnd());
-           
-            
+            try
+            {
+                // вот тут нужно запихнуть ответ от сервера и уже что-то будет ??? Как его посмотреть ?
+                var result = JsonConvert.DeserializeObject<Result>(json);
+
+                if (result?.Chart?.Data == null || result.Chart.Data.Length == 0 || 
+                    result.Chart.Data[0].Indicator?.CurrentValue == null ||
+                    result.Chart.Data[0].Indicator?.CurrentValue.Length == 0 ||
+                    result.Chart.Data[0].Indicator?.CurrentValue[0].Value.Length == 0)
+                {
+                    Console.WriteLine("Bad object format");
+                }
+                else
+                {
+                    Console.WriteLine($"Current value for {code}: {result.Chart.Data[0].Indicator.CurrentValue[0].Value[0].ToString("#,#00.00")}");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Cannot deserialize string due an error {ex.Message}");
+            }
+            //Красота! :)
+            //Охренеть...лично мне
+
+
             // string json = quote;
             // Data newdata = JsonConvert.DeserializeObject<Data>(json);
 
 
 
-            Console.WriteLine(quote);
+            //Console.WriteLine(quote);
             Console.WriteLine("Press any key to exit!");
             Console.ReadKey();
         }
