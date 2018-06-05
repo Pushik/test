@@ -14,5 +14,6 @@ namespace test.Models
 
         [JsonProperty("indicators")]
         public Indicator Indicator { get; set; }
-    }
+
+     }
 }
