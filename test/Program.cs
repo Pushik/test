@@ -56,15 +56,7 @@ namespace test
                 Console.WriteLine($"Cannot deserialize string due an error {ex.Message}");
             }
             //Красота! :)
-            //Охренеть...лично мне
-
-
-            // string json = quote;
-            // Data newdata = JsonConvert.DeserializeObject<Data>(json);
-
-
-
-            //Console.WriteLine(quote);
+           
             Console.WriteLine("Press any key to exit!");
             Console.ReadKey();
         }
