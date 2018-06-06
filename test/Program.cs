@@ -58,9 +58,7 @@ namespace test
                     // Квота Открытие - закрытие
                     Console.WriteLine($"Value Open for {code}: {result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0].ToString("#,#00.0000")}");
                     Console.WriteLine($"Value Close for {code}: {result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.0000")}");
-                    var open = (result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0].ToString("#,#00.0000"));
-                    var close = (result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.0000"));
-
+                    
                    // Разница между Open и Close  Quote 
                     decimal a = ((result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0]) - (result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0]));
                     Console.WriteLine($"Delta from Quote Open<->Close: {a}");
