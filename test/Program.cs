@@ -54,10 +54,16 @@ namespace test
                     Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.ExchangeName.ToString()}");
                     Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.Timezone.ToString()}");
                     Console.WriteLine($"Exchange Time Zone :{result.Chart.Data[0].Metadata.ExchangeTimeZoneName.ToString()}");
-                    Console.WriteLine($"Time Stamp: {result.Chart.Data[0].Timestamp.ToString()}");
-                    //Console.WriteLine($"Open Value: {result.Chart.Data[0].Indicator.Quotes.
-                    //Console.WriteLine($"Current value for {code}: {result.Chart.Data[0].Indicator.CurrentValue[0].Value1[0].ToString("#,#00.0000")}");
 
+                    // Квота Открытие - закрытие
+                    Console.WriteLine($"Value Open for {code}: {result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0].ToString("#,#00.0000")}");
+                    Console.WriteLine($"Value Close for {code}: {result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.0000")}");
+                    var open = (result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0].ToString("#,#00.0000"));
+                    var close = (result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.0000"));
+
+                   // Разница между Open и Close  Quote 
+                    decimal a = ((result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0]) - (result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0]));
+                    Console.WriteLine($"Delta from Quote Open<->Close: {a}");
 
                 }
             }
@@ -65,8 +71,7 @@ namespace test
             {
                 Console.WriteLine($"Cannot deserialize string due an error {ex.Message}");
             }
-            //Красота! :)
-           
+                      
             Console.WriteLine("Press any key to exit!");
             Console.ReadKey();
         }

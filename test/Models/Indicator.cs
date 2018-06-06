@@ -12,6 +12,9 @@ namespace test.Models
         [JsonProperty("quote")]
         public Quote[] Quotes { get; set; }
 
+     //   [JsonProperty("close")]
+     //   public QuoteValue[] CurrentValueClose { get; set; }
+
         [JsonProperty("adjclose")]
         public QuoteValue[] CurrentValue { get; set; }
     }

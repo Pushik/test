@@ -9,7 +9,11 @@ namespace test.Models
 {
     public class Quote
     {
-        [JsonProperty("Open")]
-        public decimal[] value { get; set; }
+        [JsonProperty("open")]
+        public decimal[] Valueopen { get; set; }
+
+        [JsonProperty("close")]
+        public decimal[] Valueclose { get; set; }
+
     }
 }
