@@ -12,8 +12,12 @@ namespace test.Models
         [JsonProperty("meta")]
         public Info Metadata { get; set; }
 
+        [JsonProperty("quote")]
+        public Quote Quotes { get; set; }
+        
         [JsonProperty("indicators")]
         public Indicator Indicator { get; set; }
+               
 
-     }
+    }
 }

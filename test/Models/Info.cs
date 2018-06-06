@@ -9,7 +9,18 @@ namespace test.Models
 {
     public class Info
     {
-        [JsonProperty("currency")]
-        public string Currency { get; set; }
+        [JsonProperty("Currency")]
+        public String Currency { get; set; }
+
+        [JsonProperty("ExchangeName")]
+        public String ExchangeName { get; set; }
+
+        [JsonProperty("Timezone")]
+        public String Timezone { get; set; }
+
+        [JsonProperty("ExchangeTimeZoneName")]
+        public String ExchangeTimeZoneName { get; set; }
+
+
     }
 }

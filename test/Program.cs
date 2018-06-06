@@ -16,7 +16,7 @@ namespace test
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter Quote code");
+            Console.WriteLine("Enter Quote code:");
             var code = Console.ReadLine();
 
             // Получение данных от сервера Yahoo
@@ -31,12 +31,12 @@ namespace test
             Console.WriteLine("Raw sever reponse:");
             Console.WriteLine(json);
 
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
+            //Console.WriteLine("Press any key to continue...");
+            //Console.ReadKey();
 
             try
             {
-                // вот тут нужно запихнуть ответ от сервера и уже что-то будет ??? Как его посмотреть ?
+                // вот тут нужно запихнуть ответ от сервера и уже что-то будет ??? 
                 var result = JsonConvert.DeserializeObject<Result>(json);
 
                 if (result?.Chart?.Data == null || result.Chart.Data.Length == 0 || 
@@ -48,7 +48,17 @@ namespace test
                 }
                 else
                 {
-                    Console.WriteLine($"Current value for {code}: {result.Chart.Data[0].Indicator.CurrentValue[0].Value[0].ToString("#,#00.00")}");
+                   
+                    Console.WriteLine($"Current value for {code}: {result.Chart.Data[0].Indicator.CurrentValue[0].Value[0].ToString("#,#00.0000")}");
+                    Console.WriteLine($"Current Curency : {result.Chart.Data[0].Metadata.Currency.ToString()}");
+                    Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.ExchangeName.ToString()}");
+                    Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.Timezone.ToString()}");
+                    Console.WriteLine($"Exchange Time Zone :{result.Chart.Data[0].Metadata.ExchangeTimeZoneName.ToString()}");
+                    Console.WriteLine($"Time Stamp: {result.Chart.Data[0].Timestamp.ToString()}");
+                    //Console.WriteLine($"Open Value: {result.Chart.Data[0].Indicator.Quotes.
+                    //Console.WriteLine($"Current value for {code}: {result.Chart.Data[0].Indicator.CurrentValue[0].Value1[0].ToString("#,#00.0000")}");
+
+
                 }
             }
             catch(Exception ex)

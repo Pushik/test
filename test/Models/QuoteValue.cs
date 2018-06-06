@@ -11,5 +11,6 @@ namespace test.Models
     {
         [JsonProperty("adjclose")]
         public decimal[] Value { get; set; }
+
     }
 }
