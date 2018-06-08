@@ -7,39 +7,115 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using test.Models;
+using System.Timers;
 
 
 namespace test
 {
-  
+    
+
     class Program
     {
+        private static Timer aTimer;
+
+        static public void Tick(Object stateInfo)
+        {
+            Console.WriteLine("Local Time: {0}", DateTime.Now.ToString("h:mm:ss"));
+        }
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter Quote code:");
-            var code = Console.ReadLine();
+            // Чтение кода котировки
+          //  Console.WriteLine("Enter Quote code:");
+          //  var code = Console.ReadLine();
+
+            // Create a timer and set a two second interval.
+            aTimer = new System.Timers.Timer();
+            aTimer.Interval = 5000;
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            // Have the timer fire repeated events (true is the default)
+            aTimer.AutoReset = true;
+            // Start the timer
+            aTimer.Enabled = true;
+            Console.WriteLine("Timer 5 second");
+            Console.ReadKey();
+
+            // Чтение кода котировки
+            //Console.WriteLine("Enter Quote code:");
+            //var code = Console.ReadLine();
 
             // Получение данных от сервера Yahoo
+            //  Console.WriteLine("Данные от сервера");
+            //  WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{code.ToUpperInvariant()}?interval=1d");
+            //  Stream objStream;
+            //  objStream = wrGETURL.GetResponse().GetResponseStream();
+            //  StreamReader objReader = new StreamReader(objStream);
+            //  var json = objReader.ReadToEnd();
+
+            // Вот тут выводится всё одной строкой
+            // Console.WriteLine("Raw sever reponse:");
+            // Console.WriteLine(json);
+
+            //Console.WriteLine("Press any key to continue...");
+            //Console.ReadKey();
+
+            //  try
+            //  {
+            // вот тут нужно запихнуть ответ от сервера и уже что-то будет ??? 
+            //      var result = JsonConvert.DeserializeObject<Result>(json);
+
+            //      if (result?.Chart?.Data == null || result.Chart.Data.Length == 0 ||
+            //          result.Chart.Data[0].Indicator?.CurrentValue == null ||
+            //         result.Chart.Data[0].Indicator?.CurrentValue.Length == 0 ||
+            //         result.Chart.Data[0].Indicator?.CurrentValue[0].Value.Length == 0)
+            //    {
+            //       Console.WriteLine("Bad object format");
+            //   }
+            //    else
+            //   {
+            //      Console.WriteLine($"Current value for {code}: {result.Chart.Data[0].Indicator.CurrentValue[0].Value[0].ToString("#,#00.0000")}");
+            //     Console.WriteLine($"Current Curency : {result.Chart.Data[0].Metadata.Currency.ToString()}");
+            //      Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.ExchangeName.ToString()}");
+            //      Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.Timezone.ToString()}");
+            //      Console.WriteLine($"Exchange Time Zone :{result.Chart.Data[0].Metadata.ExchangeTimeZoneName.ToString()}");
+
+            // Квота Открытие - закрытие
+            //      Console.WriteLine($"Value Open for {code}: {result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0].ToString("#,#00.0000")}");
+            //      Console.WriteLine($"Value Close for {code}: {result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.0000")}");
+
+            // Разница между Open и Close  Quote 
+            //      decimal a = ((result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0]) - (result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0]));
+            //      Console.WriteLine($"Delta from Quote Open<->Close: {a}");
+
+            //  }
+
+            // }
+            // catch (Exception ex)
+            // {
+            //     Console.WriteLine($"Cannot deserialize string due an error {ex.Message}");
+            // }
+
+
+        }
+
+        private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            Console.WriteLine("The Elapsed event was raised at {0}", e.SignalTime);
+            // Получение данных от сервера Yahoo
             Console.WriteLine("Данные от сервера");
-            WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{code.ToUpperInvariant()}?interval=1d");
+            WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/MU?interval=1d");
             Stream objStream;
             objStream = wrGETURL.GetResponse().GetResponseStream();
             StreamReader objReader = new StreamReader(objStream);
             var json = objReader.ReadToEnd();
-
-            // Вот тут выводится всё одной строкой
-            Console.WriteLine("Raw sever reponse:");
-            Console.WriteLine(json);
-
-            //Console.WriteLine("Press any key to continue...");
-            //Console.ReadKey();
 
             try
             {
                 // вот тут нужно запихнуть ответ от сервера и уже что-то будет ??? 
                 var result = JsonConvert.DeserializeObject<Result>(json);
 
-                if (result?.Chart?.Data == null || result.Chart.Data.Length == 0 || 
+                if (result?.Chart?.Data == null || result.Chart.Data.Length == 0 ||
                     result.Chart.Data[0].Indicator?.CurrentValue == null ||
                     result.Chart.Data[0].Indicator?.CurrentValue.Length == 0 ||
                     result.Chart.Data[0].Indicator?.CurrentValue[0].Value.Length == 0)
@@ -48,30 +124,31 @@ namespace test
                 }
                 else
                 {
-                   
-                    Console.WriteLine($"Current value for {code}: {result.Chart.Data[0].Indicator.CurrentValue[0].Value[0].ToString("#,#00.0000")}");
+                    Console.WriteLine($"Current value for code: {result.Chart.Data[0].Indicator.CurrentValue[0].Value[0].ToString("#,#00.0000")}");
                     Console.WriteLine($"Current Curency : {result.Chart.Data[0].Metadata.Currency.ToString()}");
                     Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.ExchangeName.ToString()}");
                     Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.Timezone.ToString()}");
                     Console.WriteLine($"Exchange Time Zone :{result.Chart.Data[0].Metadata.ExchangeTimeZoneName.ToString()}");
 
                     // Квота Открытие - закрытие
-                    Console.WriteLine($"Value Open for {code}: {result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0].ToString("#,#00.0000")}");
-                    Console.WriteLine($"Value Close for {code}: {result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.0000")}");
-                    
-                   // Разница между Open и Close  Quote 
+                    Console.WriteLine($"Value Open for code: {result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0].ToString("#,#00.0000")}");
+                    Console.WriteLine($"Value Close for code: {result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.0000")}");
+
+                    // Разница между Open и Close  Quote 
                     decimal a = ((result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0]) - (result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0]));
                     Console.WriteLine($"Delta from Quote Open<->Close: {a}");
+                    Console.WriteLine();
+                    Console.WriteLine("Press any key to exit!");
+                    Console.ReadKey();
 
                 }
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Cannot deserialize string due an error {ex.Message}");
             }
-                      
-            Console.WriteLine("Press any key to exit!");
-            Console.ReadKey();
+
         }
     }
 }
