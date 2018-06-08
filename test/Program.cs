@@ -18,10 +18,10 @@ namespace test
     {
         private static Timer aTimer;
 
-        static public void Tick(Object stateInfo)
-        {
-            Console.WriteLine("Local Time: {0}", DateTime.Now.ToString("h:mm:ss"));
-        }
+     //   static public void Tick(Object stateInfo)
+     //   {
+     //       Console.WriteLine("Local Time: {0}", DateTime.Now.ToString("h:mm:ss"));
+     //   }
 
         static void Main(string[] args)
         {
