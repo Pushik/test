@@ -31,7 +31,7 @@ namespace test
             // Create a timer and set a two second interval.
             aTimer = new System.Timers.Timer();
             aTimer.Interval = (timertime*1000);
-            aTimer.Elapsed += DataYohoo1;  // Hook up the Elapsed event for the timer.
+            aTimer.Elapsed +=  DataYohoo1;  // Hook up the Elapsed event for the timer.
             aTimer.AutoReset = true;  // Have the timer fire repeated events (true is the default)
             aTimer.Enabled = true;  // Start the timer
             Console.WriteLine(DataYohoo1(code));
@@ -127,7 +127,7 @@ namespace test
 
         //}
 
-        public static decimal DataYohoo1(string code , System.Timers.ElapsedEventArgs e)
+        public static decimal DataYohoo1(string code, System.Timers.ElapsedEventArgs e)
         {
            // Console.WriteLine("The Elapsed event was raised at {0}", e.SignalTime);
 
