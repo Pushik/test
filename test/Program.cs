@@ -35,7 +35,7 @@ namespace test
             aTimer.AutoReset = true;  // Have the timer fire repeated events (true is the default)
             aTimer.Enabled = true;  // Start the timer
             Console.WriteLine(DataYohoo1(code));
-                               
+            //                   
             // Получение данных от сервера Yahoo
             //  Console.WriteLine("Данные от сервера");
               WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{code.ToUpperInvariant()}?interval=1d");
