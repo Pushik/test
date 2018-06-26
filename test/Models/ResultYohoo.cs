@@ -9,9 +9,9 @@ namespace test.Models
     public class ResultYohoo
     {
 
-        public String Currency;
-        public String ExchangeName;
-        public String Timezone;
+        public string Currency { get; set; }
+        public string ExchangeName { get; set; }
+        public string Timezone { get; set; }
         
         public void GetInfo()
         {

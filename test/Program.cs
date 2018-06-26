@@ -40,7 +40,7 @@ namespace test
                        
                 
         }
-
+        // Событие по таймеру
         public static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
         {
             Console.WriteLine("the elapsed event was raised at {0}", e.SignalTime);
@@ -48,10 +48,9 @@ namespace test
             data.GetInfo();
             
         }
-
+        // Получение данных от сервера Yahoo
         public static ResultYohoo DataYohoo1(string code)
         {
-            // Получение данных от сервера Yahoo
             Console.WriteLine("Данные от сервера");
             WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{code.ToUpperInvariant()}?interval=1d");
             // Пример получение данных по указанной котировке - MU
