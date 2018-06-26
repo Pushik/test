@@ -37,10 +37,10 @@ namespace test
 
             Console.WriteLine("Press any key to exit!");
             Console.ReadKey();
-           
+
 
             // Получение данных от сервера Yahoo
-            
+
             //  Console.WriteLine("Данные от сервера");
             //  WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{code.ToUpperInvariant()}?interval=1d");
             //  Stream objStream;
@@ -50,14 +50,14 @@ namespace test
             //  var result = JsonConvert.DeserializeObject<Result>(json);
 
             // Попытка собрать в массив
-            
+
             //decimal[] numbers = new decimal[5];
             //for (int b = 0; b < numbers.Length; b++)
             //    { numbers[b] = decimal.Parse(result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0].ToString());
             //    }
 
             // Попытка вывести из массива
-            
+
             //Console.WriteLine("Массив значений OpeN");
             //for (int b = 0; b < numbers.Length; b++)
             // {
@@ -67,21 +67,25 @@ namespace test
             //Console.ReadKey();
 
             // вот тут выводится всё одной строкой
-            
+
             // console.writeline("raw sever reponse:");
             // console.writeline(json);
 
-
+            var Res = new ResultYohoo();
+                
         }
 
         public static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
         {
             Console.WriteLine("the elapsed event was raised at {0}", e.SignalTime);
-            Console.WriteLine(DataYohoo1(code));
-                        
+           // Console.WriteLine(DataYohoo1(code));
+            
+            var data = DataYohoo1(code);
+            data.GetInfo();
+            
         }
 
-        public static decimal DataYohoo1(string code)
+        public static ResultYohoo DataYohoo1(string code)
         {
             // Получение данных от сервера Yahoo
             Console.WriteLine("Данные от сервера");
@@ -108,23 +112,28 @@ namespace test
                 }
                 else
                 {
-                    Console.WriteLine($"Current value for code: {result.Chart.Data[0].Indicator.CurrentValue[0].Value[0].ToString("#,#00.0000")}");
-                    Console.WriteLine($"Current Curency : {result.Chart.Data[0].Metadata.Currency.ToString()}");
-                    Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.ExchangeName.ToString()}");
-                    Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.Timezone.ToString()}");
-                    Console.WriteLine($"Exchange Time Zone :{result.Chart.Data[0].Metadata.ExchangeTimeZoneName.ToString()}");
-
+                    var data1 = new ResultYohoo();
+                    data1.Currency = result.Chart.Data[0].Metadata.Currency.ToString();
+                    data1.ExchangeName = result.Chart.Data[0].Metadata.ExchangeName.ToString();
+                    data1.Timezone = result.Chart.Data[0].Metadata.Timezone.ToString();
+                    
+                    
+                   
+                    // Console.WriteLine($"Current value for code: {result.Chart.Data[0].Indicator.CurrentValue[0].Value[0].ToString("#,#00.0000")}");
+                    // Console.WriteLine($"Current Curency : {result.Chart.Data[0].Metadata.Currency.ToString()}");
+                    // Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.ExchangeName.ToString()}");
+                    // Console.WriteLine($"Exchange Name: {result.Chart.Data[0].Metadata.Timezone.ToString()}");
+                    // Console.WriteLine($"Exchange Time Zone :{result.Chart.Data[0].Metadata.ExchangeTimeZoneName.ToString()}");
                     // Квота Открытие - закрытие
-                    Console.WriteLine($"Value Open for code: {result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0].ToString("#,#00.0000")}");
-                    Console.WriteLine($"Value Close for code: {result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.0000")}");
-
+                    //Console.WriteLine($"Value Open for code: {result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0].ToString("#,#00.0000")}");
+                    //Console.WriteLine($"Value Close for code: {result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.0000")}");
                     // Разница между Open и Close  Quote 
-                    decimal a = ((result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0]) - (result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0]));
-                    Console.WriteLine($"Delta from Quote Open<->Close: {a}");
-                    Console.WriteLine();
-                    //var b = result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0];
-                    //return b;
-
+                    //decimal a = ((result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0]) - (result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0]));
+                    //Console.WriteLine($"Delta from Quote Open<->Close: {a}");
+                    //Console.WriteLine();
+                    // var b = result.Chart.Data[0].Indicator.Quotes[0].Valueopen[0];
+                    return data1;
+                    
                     Console.WriteLine("Press any key to exit!");
                     Console.ReadKey();
 
@@ -134,14 +143,14 @@ namespace test
             catch (Exception ex)
             {
                 Console.WriteLine($"Cannot deserialize string due an error {ex.Message}");
-                return -1;
+                return null;
             }
             finally
             { aTimer.AutoReset = true;
                 
             }
 
-            return -1;
+            return null;
         }
 
     }

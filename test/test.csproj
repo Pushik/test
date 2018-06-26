@@ -52,6 +52,7 @@
     <Compile Include="Models\Quote.cs" />
     <Compile Include="Models\QuoteValue.cs" />
     <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\ResultYohoo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
