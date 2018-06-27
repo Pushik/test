@@ -10,12 +10,16 @@ namespace test.Models
     {
 
         public string Currency { get; set; }
+        public string Adjclose { get; set; }
         public string ExchangeName { get; set; }
-        public string Timezone { get; set; }
+     
         
-        public void GetInfo()
+            public void GetInfo()
         {
-            Console.WriteLine($"ExchangeName: {ExchangeName}  Currency: {Currency} Timezone:{Timezone}");
+            
+            Console.WriteLine($"Биржа: {ExchangeName}");
+            Console.WriteLine($"Валюта: {Currency}");
+            Console.WriteLine($"Закрытие: {Adjclose}");
         }
     }
 }

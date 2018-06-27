@@ -25,14 +25,15 @@ namespace test
             // Чтение кода котировки
             Console.WriteLine("Enter Quote code:");
             code = Console.ReadLine();
+            // Чтение интервала времени для запроса
             Console.WriteLine("Enter Time Period in second:");
             timertime = Convert.ToInt16(Console.ReadLine());
 
             // Создание таймера с принимаемым интервалом в переменной timertime
             aTimer = new System.Timers.Timer();
             aTimer.Interval = (timertime * 1000);
-            aTimer.Elapsed += OnTimedEvent;  // Hook up the Elapsed event for the timer.
-            aTimer.AutoReset = true;  // Have the timer fire repeated events (true is the default)
+            aTimer.Elapsed += OnTimedEvent;  // Событие по истечению таймера.
+            aTimer.AutoReset = true;  // Повторить события таймера (true is the default)
             aTimer.Enabled = true;  // Start the timer
 
             Console.WriteLine("Press any key to exit!");
@@ -43,15 +44,15 @@ namespace test
         // Событие по таймеру
         public static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
         {
-            Console.WriteLine("the elapsed event was raised at {0}", e.SignalTime);
+            Console.WriteLine();
+            Console.WriteLine("Данные от сервера");
+            Console.WriteLine("Локальное время запроса {0}", e.SignalTime);
             var data = DataYohoo1(code);
             data.GetInfo();
-            
         }
         // Получение данных от сервера Yahoo
         public static ResultYohoo DataYohoo1(string code)
         {
-            Console.WriteLine("Данные от сервера");
             WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{code.ToUpperInvariant()}?interval=1d");
             // Пример получение данных по указанной котировке - MU
             // WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/MU?interval=1d");
@@ -65,8 +66,7 @@ namespace test
             {
                 // присваиваем ответ от сервера 
                 var result = JsonConvert.DeserializeObject<Result>(json);
-
-
+                
                 if (result?.Chart?.Data == null || result.Chart.Data.Length == 0 ||
                     result.Chart.Data[0].Indicator?.CurrentValue == null ||
                     result.Chart.Data[0].Indicator?.CurrentValue.Length == 0 ||
@@ -79,28 +79,23 @@ namespace test
                     var data1 = new ResultYohoo();
                     data1.Currency = result.Chart.Data[0].Metadata.Currency.ToString();
                     data1.ExchangeName = result.Chart.Data[0].Metadata.ExchangeName.ToString();
-                    data1.Timezone = result.Chart.Data[0].Metadata.Timezone.ToString();
+                    data1.Adjclose = result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.000");
                     // возврат модели
                     return data1;
-                    
-                    Console.WriteLine("Press any key to exit!");
-                    Console.ReadKey();
-
+                                   
                 }
 
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Cannot deserialize string due an error {ex.Message}");
-                return null;
+              Console.WriteLine($"Cannot deserialize string due an error {ex.Message}");
+              return null;
             }
             finally
             {
-                aTimer.AutoReset = true;
+              aTimer.AutoReset = true;
             }
-
             return null;
         }
-
     }
 }
