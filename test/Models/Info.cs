@@ -10,16 +10,16 @@ namespace test.Models
     public class Info
     {
         [JsonProperty("Currency")]
-        public String Currency { get; set; }
+        public string Currency { get; set; }
 
         [JsonProperty("ExchangeName")]
-        public String ExchangeName { get; set; }
+        public string ExchangeName { get; set; }
 
         [JsonProperty("Timezone")]
-        public String Timezone { get; set; }
+        public string Timezone { get; set; }
 
         [JsonProperty("ExchangeTimeZoneName")]
-        public String ExchangeTimeZoneName { get; set; }
+        public string ExchangeTimeZoneName { get; set; }
 
 
     }

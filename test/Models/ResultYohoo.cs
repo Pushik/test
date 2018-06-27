@@ -14,12 +14,9 @@ namespace test.Models
         public string ExchangeName { get; set; }
      
         
-            public void GetInfo()
+        public void GetInfo()
         {
-            
-            Console.WriteLine($"Биржа: {ExchangeName}");
-            Console.WriteLine($"Валюта: {Currency}");
-            Console.WriteLine($"Закрытие: {Adjclose}");
+            Console.WriteLine($"Биржа: {ExchangeName}\n"+$"Валюта: {Currency}\n"+$"Закрытие: {Adjclose}");
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using test.Models;
 using System.Timers;
+using System.Collections;
 
 
 namespace test
@@ -16,12 +17,14 @@ namespace test
     class Program
     {
         private static Timer aTimer;
-
         static string code { get; set; }
-
+        static ArrayList list = new ArrayList();
+        
         static void Main(string[] args)
         {
+            //ArrayList list = new ArrayList();
             int timertime;
+            
             // Чтение кода котировки
             Console.WriteLine("Enter Quote code:");
             code = Console.ReadLine();
@@ -36,10 +39,16 @@ namespace test
             aTimer.AutoReset = true;  // Повторить события таймера (true is the default)
             aTimer.Enabled = true;  // Start the timer
 
-            Console.WriteLine("Press any key to exit!");
             Console.ReadKey();
-                       
-                
+            // Вывод накопленных котировок
+            Console.WriteLine("Array Adj Close:");
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine(list[i]);
+            }
+            aTimer.Enabled = false;
+            Console.ReadKey();
+            
         }
         // Событие по таймеру
         public static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
@@ -47,9 +56,12 @@ namespace test
             Console.WriteLine();
             Console.WriteLine("Данные от сервера");
             Console.WriteLine("Локальное время запроса {0}", e.SignalTime);
-            var data = DataYohoo1(code);
-            data.GetInfo();
+            var data2 = DataYohoo1(code);
+            data2.GetInfo();
+            list.Add(data2.Adjclose);
+            
         }
+        
         // Получение данных от сервера Yahoo
         public static ResultYohoo DataYohoo1(string code)
         {

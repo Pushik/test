@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace test.Models
 {
-    public class Chart
+    public class chart
     {
         [JsonProperty("result")]
         public Data[] Data { get; set; }

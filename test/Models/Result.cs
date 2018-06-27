@@ -10,6 +10,6 @@ namespace test.Models
     public class Result
     {
         [JsonProperty("chart")]
-        public Chart Chart { get; set; }
+        public chart Chart { get; set; }
     }
 }
