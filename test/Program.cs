@@ -19,6 +19,7 @@ namespace test
         private static Timer aTimer;
         static string code { get; set; }
         static ArrayList list = new ArrayList();
+        public string IStockExchangeService;
         
         static void Main(string[] args)
         {
@@ -56,14 +57,14 @@ namespace test
             Console.WriteLine();
             Console.WriteLine("Данные от сервера");
             Console.WriteLine("Локальное время запроса {0}", e.SignalTime);
-            var data2 = DataYohoo1(code);
+            var data2 = DataYohoo(code);
             data2.GetInfo();
             list.Add(data2.Adjclose);
             
         }
         
         // Получение данных от сервера Yahoo
-        public static ResultYohoo DataYohoo1(string code)
+        public static ResultYohoo DataYohoo(string code)
         {
             WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{code.ToUpperInvariant()}?interval=1d");
             // Пример получение данных по указанной котировке - MU

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IStockExchangeService.cs" />
     <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\Data.cs" />
     <Compile Include="Models\Indicator.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Models\QuoteValue.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\ResultYohoo.cs" />
+    <Compile Include="Models\StockExchangeService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
