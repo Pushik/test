@@ -7,13 +7,8 @@ using test.Models;
 
 namespace test
 {
-    interface IStockExchangeService
+    public interface IStockExchangeService
     {
-         string Currency { get; set; }
-         string Adjclose { get; set; }
-         string ExchangeName { get; set; }
-
-         void GetInfo(string data);
-        
+        ResultYohoo GetData(string codequote);
     }
 }
