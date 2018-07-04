@@ -17,18 +17,18 @@ namespace test
     class Program
     {
         private static Timer aTimer;
-        static string codequote { get; set; }
-        public  static IStockExchangeService asd;
-      static void Main(string[] args)
+        public static string codequote { get; set; }
+        public  static IStockExchangeService IStockExchangeService1;
+
+        static void Main(string[] args)
         {
-            
+            IStockExchangeService IStockExchangeService1 = new StockExchangeService();
             int timertime;
-            IStockExchangeService asd = new StockExchangeService();
-           
+            
             
         // Чтение кода котировки
             Console.WriteLine("Enter Quote code:");
-            codequote = Console.ReadLine();
+            int codequote = Convert.ToInt16(Console.ReadLine());
             // Чтение интервала времени для запроса
             Console.WriteLine("Enter Time Period in second:");
             timertime = Convert.ToInt16(Console.ReadLine());
@@ -41,8 +41,9 @@ namespace test
             aTimer.Enabled = true;  // Start the timer
             
             Console.ReadKey();
-            Console.WriteLine(asd.Adjclose);
             
+
+
          }
         // Событие по таймеру
           public static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
