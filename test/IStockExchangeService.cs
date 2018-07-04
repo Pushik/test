@@ -9,7 +9,11 @@ namespace test
 {
     interface IStockExchangeService
     {
-        ResultYohoo GetDataForQuote(string quoteCode);
+         string Currency { get; set; }
+         string Adjclose { get; set; }
+         string ExchangeName { get; set; }
 
+         void GetInfo(string data);
+        
     }
 }

@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace test
 {
-    class StockExchangeService
+    class StockExchangeService : IStockExchangeService
     {
+        public string Currency { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Adjclose { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ExchangeName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public void GetInfo(string data)
+        {
+            Console.WriteLine($"Биржа: {ExchangeName}\n" + $"Валюта: {Currency}\n" + $"Закрытие: {Adjclose}");
+           
+        }
     }
 }

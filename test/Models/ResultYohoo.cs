@@ -12,11 +12,11 @@ namespace test.Models
         public string Currency { get; set; }
         public string Adjclose { get; set; }
         public string ExchangeName { get; set; }
-     
-        
+
+
         public void GetInfo()
         {
-            Console.WriteLine($"Биржа: {ExchangeName}\n"+$"Валюта: {Currency}\n"+$"Закрытие: {Adjclose}");
+            Console.WriteLine($"Биржа: {ExchangeName}\n" + $"Валюта: {Currency}\n" + $"Закрытие: {Adjclose}");
         }
     }
 }

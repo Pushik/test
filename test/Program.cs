@@ -17,56 +17,51 @@ namespace test
     class Program
     {
         private static Timer aTimer;
-        static string code { get; set; }
-        static ArrayList list = new ArrayList();
-        public string IStockExchangeService;
-        
-        static void Main(string[] args)
+        static string codequote { get; set; }
+        public  static IStockExchangeService asd;
+      static void Main(string[] args)
         {
-            //ArrayList list = new ArrayList();
-            int timertime;
             
-            // Чтение кода котировки
+            int timertime;
+            IStockExchangeService asd = new StockExchangeService();
+           
+            
+        // Чтение кода котировки
             Console.WriteLine("Enter Quote code:");
-            code = Console.ReadLine();
+            codequote = Console.ReadLine();
             // Чтение интервала времени для запроса
             Console.WriteLine("Enter Time Period in second:");
             timertime = Convert.ToInt16(Console.ReadLine());
 
-            // Создание таймера с принимаемым интервалом в переменной timertime
+        // Создание таймера с принимаемым интервалом в переменной timertime
             aTimer = new System.Timers.Timer();
             aTimer.Interval = (timertime * 1000);
             aTimer.Elapsed += OnTimedEvent;  // Событие по истечению таймера.
             aTimer.AutoReset = true;  // Повторить события таймера (true is the default)
             aTimer.Enabled = true;  // Start the timer
-
-            Console.ReadKey();
-            // Вывод накопленных котировок
-            Console.WriteLine("Array Adj Close:");
-            for (int i = 0; i < list.Count; i++)
-            {
-                Console.WriteLine(list[i]);
-            }
-            aTimer.Enabled = false;
-            Console.ReadKey();
             
-        }
+            Console.ReadKey();
+            Console.WriteLine(asd.Adjclose);
+            
+         }
         // Событие по таймеру
-        public static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
-        {
+          public static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
+          {
             Console.WriteLine();
             Console.WriteLine("Данные от сервера");
             Console.WriteLine("Локальное время запроса {0}", e.SignalTime);
-            var data2 = DataYohoo(code);
-            data2.GetInfo();
-            list.Add(data2.Adjclose);
-            
-        }
+            var data2 = DataYohoo(codequote);
+            Console.WriteLine();
+
+            //data2.GetInfo();
+            //list.Add(data2.Adjclose);
+                     
+          }
         
         // Получение данных от сервера Yahoo
-        public static ResultYohoo DataYohoo(string code)
+           public static ResultYohoo DataYohoo(string codequote)
         {
-            WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{code.ToUpperInvariant()}?interval=1d");
+            WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{codequote.ToUpperInvariant()}?interval=1d");
             // Пример получение данных по указанной котировке - MU
             // WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/MU?interval=1d");
             Stream objStream;

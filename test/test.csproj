@@ -54,9 +54,9 @@
     <Compile Include="Models\QuoteValue.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\ResultYohoo.cs" />
-    <Compile Include="Models\StockExchangeService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockExchangeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
