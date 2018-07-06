@@ -4,49 +4,64 @@ using System.IO;
 using System.Net;
 using test.Models;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace test
 {
     public class StockExchangeService : IStockExchangeService
     {
-        public ResultYohoo GetData(string codequote)
-        {
-            WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{codequote.ToUpperInvariant()}?interval=1d");
-            // Пример получение данных по указанной котировке - MU
-            // WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/MU?interval=1d");
-            Stream objStream;
-            objStream = wrGETURL.GetResponse().GetResponseStream();
-            StreamReader objReader = new StreamReader(objStream);
-            var json = objReader.ReadToEnd();
+        
+        public string a;
+        public List<ResultYohoo> GetResRequest(List<string> quoteCodes)
+        { 
+            List<ResultYohoo> ResRequestList = new List<ResultYohoo>();
             
-            try
+            for (int i = 0; i < quoteCodes.Count; i++)
             {
-                // присваиваем ответ от сервера 
-                var result = JsonConvert.DeserializeObject<Result>(json);
+                a = quoteCodes[i];
+                var data = GetData(a);
+                ResRequestList.Add(data);
+            }
+            return ResRequestList;
+        }
 
-                if (result?.Chart?.Data == null || result.Chart.Data.Length == 0 ||
-                    result.Chart.Data[0].Indicator?.CurrentValue == null ||
-                    result.Chart.Data[0].Indicator?.CurrentValue.Length == 0 ||
-                    result.Chart.Data[0].Indicator?.CurrentValue[0].Value.Length == 0)
+        private ResultYohoo GetData(string a)
+        {
+            
+                WebRequest wrGETURL = WebRequest.Create($"https://query1.finance.yahoo.com/v8/finance/chart/{a}?interval=1d");
+                Stream objStream;
+                objStream = wrGETURL.GetResponse().GetResponseStream();
+                StreamReader objReader = new StreamReader(objStream);
+                var json = objReader.ReadToEnd();
+
+                try
                 {
-                    throw new Exception("Bad object format");
-                }
-                else
-                {   // заполняем модель ResultYohoo 
-                    var data1 = new ResultYohoo();
-                    data1.Currency = result.Chart.Data[0].Metadata.Currency.ToString();
-                    data1.ExchangeName = result.Chart.Data[0].Metadata.ExchangeName.ToString();
-                    data1.Adjclose = result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.000");
-                    // возврат модели
-                    return data1;
+                    // присваиваем ответ от сервера 
+                    var result = JsonConvert.DeserializeObject<Result>(json);
+
+                    if (result?.Chart?.Data == null || result.Chart.Data.Length == 0 ||
+                        result.Chart.Data[0].Indicator?.CurrentValue == null ||
+                        result.Chart.Data[0].Indicator?.CurrentValue.Length == 0 ||
+                        result.Chart.Data[0].Indicator?.CurrentValue[0].Value.Length == 0)
+                    {
+                        throw new Exception("Bad object format");
+                    }
+                    else
+                    {
+                        // заполняем модель ResultYohoo 
+                        var data = new ResultYohoo();
+                        data.Currency = result.Chart.Data[0].Metadata.Currency.ToString();
+                        data.ExchangeName = result.Chart.Data[0].Metadata.ExchangeName.ToString();
+                        data.Adjclose = result.Chart.Data[0].Indicator.Quotes[0].Valueclose[0].ToString("#,#00.000");
+                        // возврат модели ResultYohoo
+                        return data;
+                    }
                 }
 
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Cannot deserialize string due an error {ex.Message}");
-            }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Cannot deserialize string due an error {ex.Message}");
+                }
+       
         }
     }
 }
